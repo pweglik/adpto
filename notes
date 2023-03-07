@@ -1,0 +1,14 @@
+Na labach dyskutujemy checkpointy i tymczasowe rozwiązania.
+
+Zadanie:
+Mamy farmera, który posiada stado kur.
+Chce zbudować ogrodzenie.
+INPUT:
+Prostokąt n x m
+np. 
+1 2 3 2 0
+3 1 0 2 1
+2 1 0 1 1
+1 2 1 2 1
+
+to samo co Slither Link
