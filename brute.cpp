@@ -15,6 +15,9 @@ int **board;
 int **vertical_edges;
 int **horizontal_edges;
 
+int start_x = 0;
+int start_y = 0;
+
 void draw_board()
 {
     for (int i = 0; i < 2 * height + 1; i++)
@@ -93,13 +96,14 @@ bool verify_solution()
         }
     }
 
-    if (x == -1 && y == -1) {
+    if (x == -1 && y == -1)
+    {
         return false;
     }
 
 looping:
-    int start_x = x - 1;
-    int start_y = y;
+    start_x = x - 1;
+    start_y = y;
 
     int prev_x = start_x;
     int prev_y = start_y;
@@ -179,7 +183,7 @@ int main()
     scanf("%d %d", &width, &height);
     for (int i = 0; i < height; i++)
     {
-        board[i] = (int *)malloc(width * sizeof(int));
+        board[i] = (int *)calloc(width, sizeof(int));
         vertical_edges[i] = (int *)calloc(width + 1, sizeof(int));
         horizontal_edges[i] = (int *)calloc(width, sizeof(int));
 
@@ -190,27 +194,39 @@ int main()
     }
     horizontal_edges[height] = (int *)calloc(width + 1, sizeof(int));
 
-    //  brute force
+    for (int i = 0; i < height; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            printf("%d ", board[i][j]);
+        }
+        printf("\n");
+    }
 
-    for(u_int64_t mask = 0; mask < 1 << (width * (height + 1) + (width + 1) * height + 1); mask++){
+    draw_board();
+    printf("drew!\n");
+    //  brute force
+    for (u_int64_t mask = 0; mask < 20; mask++)
+    // 1 << (width * (height + 1) + (width + 1) * height + 1); mask++)
+    {
         mask_to_board(mask);
         bool succes = verify_solution();
-        // printf("%ld\n", mask);
+        // printf("%llu\n", mask);
         // draw_board();
-        if (succes) {
-            printf("%ld\n", mask);
+        if (succes)
+        {
+            printf("success!! %llu\n", mask);
             break;
         }
     }
     draw_board();
     ////// Freeing memory
-    for (int i = 0; i < height; i++)
-    {
-        free(board[i]);
-        free(vertical_edges[i]);
-        free(horizontal_edges[i]);
-    }
-    // free(vertical_edges[height]);
+    // for (int i = 0; i < height; i++)
+    // {
+    //     free(board[i]);
+    //     free(vertical_edges[i]);
+    //     free(horizontal_edges[i]);
+    // }
     // free(horizontal_edges[height]);
     // free(board);
     // free(vertical_edges);
